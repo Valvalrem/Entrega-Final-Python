@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nueva Publicación</title>
+</head>
+<body>
+    <a href="{% url 'lista_posts' %}">← Volver al inicio</a>
+    <h2>Nueva Publicación</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Publicar</button>
+    </form>
+</body>
+</html>

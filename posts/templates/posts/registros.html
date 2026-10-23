@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Usuario</title>
+</head>
+<body>
+    <a href="{% url 'lista_posts' %}">← Volver al inicio</a>
+    <h2>Crear una Cuenta</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarse</button>
+    </form>
+    <p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
+</body>
+</html>

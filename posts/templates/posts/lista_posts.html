@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Blog</title>
+</head>
+<body>
+    <!-- Barra superior de usuario -->
+    <header>
+        <nav>
+            {% if user.is_authenticated %}
+                <p>Hola, <strong>{{ user.username }}</strong> | <a href="{% url 'logout' %}">Cerrar Sesión</a></p>
+            {% else %}
+                <p>
+                    <a href="{% url 'login' %}">Iniciar Sesión</a> | 
+                    <a href="{% url 'registro' %}">Registrarse</a>
+                </p>
+            {% endif %}
+        </nav>
+    </header>
+    <hr>
+
+    <h1>Bienvenido a mi Blog</h1>
+    <hr>
+
+    {% for post in posts %}
+        <div>
+            <h2><a href="{% url 'detalle_post' post.pk %}">{{ post.titulo }}</a></h2>
+            <p>{{ post.contenido|truncatewords:20 }}</p>
+            <small>Publicado el: {{ post.fecha }} por {{ post.autor }}</small>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No hay publicaciones todavía.</p>
+    {% endfor %}
+</body>
+</html>
+
+<header>
+    <nav>
+        {% if user.is_authenticated %}
+            <p>Hola, <strong>{{ user.username }}</strong> | 
+               <a href="{% url 'crear_post' %}"><strong>+ Crear nuevo post</strong></a> | 
+               <a href="{% url 'logout' %}">Cerrar Sesión</a>
+            </p>
+        {% else %}
+            <p>
+                <a href="{% url 'login' %}">Iniciar Sesión</a> | 
+                <a href="{% url 'registro' %}">Registrarse</a>
+            </p>
+        {% endif %}
+    </nav>
+</header>
