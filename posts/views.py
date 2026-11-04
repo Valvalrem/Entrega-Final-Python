@@ -57,3 +57,41 @@ def login_usuario(request):
 def logout_usuario(request):
     logout(request)
     return redirect('lista_posts')
+
+# Vista para crear un post nuevo (requiere estar logueado)
+@login_required
+def crear_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.autor = request.user
+            post.save()
+            return redirect('lista_posts')
+    else:
+        form = PostForm()
+    return render(request, 'posts/crear_post.html', {'form': form})
+
+# --- AGREGÁ ESTO AL FINAL DEL ARCHIVO VIEWS.PY ---
+
+# Vista para Editar Post
+@login_required
+def editar_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_post', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'posts/editar_post.html', {'form': form})
+
+# Vista para Borrar Post
+@login_required
+def borrar_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('lista_posts')
+    return render(request, 'posts/borrar_post.html', {'post': post})

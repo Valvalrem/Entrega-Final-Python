@@ -21,3 +21,9 @@
     <p>{{ post.contenido }}</p>
 </body>
 </html>
+
+{% if user.is_authenticated %}
+    <br>
+    <a href="{% url 'editar_post' post.pk %}">✏️ Editar post</a> | 
+    <a href="{% url 'borrar_post' post.pk %}">🗑️ Borrar post</a>
+{% endif %}
