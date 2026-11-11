@@ -5,17 +5,16 @@ from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import PostForm
 
-# Vista para listar posts
+
 def lista_posts(request):
     posts = Post.objects.all().order_by('-fecha')
     return render(request, 'posts/lista_posts.html', {'posts': posts})
 
-# Vista para ver el detalle de un post
+
 def detalle_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'posts/detalle_post.html', {'post': post})
 
-# Vista para crear un post nuevo (requiere estar logueado)
 @login_required
 def crear_post(request):
     if request.method == 'POST':
@@ -29,7 +28,7 @@ def crear_post(request):
         form = PostForm()
     return render(request, 'posts/crear_post.html', {'form': form})
 
-# Vista de Registro de Usuarios
+
 def registro_usuario(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -41,7 +40,7 @@ def registro_usuario(request):
         form = UserCreationForm()
     return render(request, 'posts/registro.html', {'form': form})
 
-# Vista de Iniciar Sesión
+
 def login_usuario(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -53,12 +52,11 @@ def login_usuario(request):
         form = AuthenticationForm()
     return render(request, 'posts/login.html', {'form': form})
 
-# Vista de Cerrar Sesión
 def logout_usuario(request):
     logout(request)
     return redirect('lista_posts')
 
-# Vista para crear un post nuevo (requiere estar logueado)
+
 @login_required
 def crear_post(request):
     if request.method == 'POST':
@@ -72,9 +70,7 @@ def crear_post(request):
         form = PostForm()
     return render(request, 'posts/crear_post.html', {'form': form})
 
-# --- AGREGÁ ESTO AL FINAL DEL ARCHIVO VIEWS.PY ---
 
-# Vista para Editar Post
 @login_required
 def editar_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -87,7 +83,7 @@ def editar_post(request, pk):
         form = PostForm(instance=post)
     return render(request, 'posts/editar_post.html', {'form': form})
 
-# Vista para Borrar Post
+
 @login_required
 def borrar_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
