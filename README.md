@@ -29,16 +29,7 @@ cargar imágenes y gestionar usuarios mediante autenticación.
 
 ## Instalación
 
-Para descargar el proyecto, ejecutar:
-
-```bash
-git clone https://github.com/Valvalrem/Entrega-Final-Python.git
-cd Entrega-Final-Python
-```
-
 ## Ejecución del proyecto
-
-Continuar con las instrucciones...
 
 ### 1. Clonar el repositorio
 
