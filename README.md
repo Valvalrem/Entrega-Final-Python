@@ -1,26 +1,96 @@
-# Blog Web en Django - Proyecto Final Python Coderhouse
 
-## Descripción breve
-Aplicación web de blog desarrollada en Python utilizando Django, la cual permite la gestión completa de publicaciones con soporte de imágenes, autenticación de usuarios (registro, login, logout) y rutas protegidas.
+# Blog Web - Proyecto Final de Python
+
+## Descripción
+
+Aplicación web de blog desarrollada con Python y Django.
+Permite crear, visualizar, editar y eliminar publicaciones,
+cargar imágenes y gestionar usuarios mediante autenticación.
 
 ## Tecnologías utilizadas
-* Python
-* Django
-* SQLite
-* Bootstrap
-* Pillow (para manejo de imágenes)
-* python-decouple (para variables de entorno)
+
+- Python
+- Django
+- SQLite
+- Pillow
+- python-decouple
+- HTML
 
 ## Funcionalidades principales
-* Listado y visualización detallada de publicaciones.
-* Creación, edición y eliminación de posts desde la interfaz web (requiere autenticación).
-* Carga de imágenes en las publicaciones.
-* Sistema de usuarios: Registro, inicio y cierre de sesión.
-* Rutas protegidas mediante decoradores de autenticación (`@login_required`).
 
-## Instrucciones de instalación y ejecución local
+- Listado de publicaciones.
+- Visualización individual de publicaciones.
+- Creación, edición y eliminación de posts.
+- Carga y visualización de imágenes.
+- Registro de usuarios.
+- Inicio y cierre de sesión.
+- Rutas protegidas mediante @login_required.
+- Perfil de usuario con biografía e imagen.
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone <URL_DE_TU_REPOSUTORIO>
-   cd <NOMBRE_DE_TU_CARPETA>
+## Instalación
+
+### 1. Clonar el repositorio
+
+git clone https://github.com/Valvalrem/Entrega-Final-Python.git
+
+cd Entrega-Final-Python
+
+### 2. Crear el entorno virtual
+
+python -m venv venv
+
+### 3. Activar el entorno virtual
+
+Windows PowerShell:
+
+.\venv\Scripts\Activate.ps1
+
+Windows CMD:
+
+venv\Scripts\activate.bat
+
+Linux / macOS:
+
+source venv/bin/activate
+
+### 4. Instalar dependencias
+
+python -m pip install --upgrade pip
+
+pip install -r requirements.txt
+
+### 5. Configurar variables de entorno
+
+Crear un archivo llamado .env a partir de .env.example.
+
+Configurar SECRET_KEY y DEBUG=True para desarrollo local.
+
+No compartir el archivo .env ni subirlo a GitHub.
+
+### 6. Ejecutar migraciones
+
+python manage.py migrate
+
+### 7. Crear un superusuario
+
+python manage.py createsuperuser
+
+### 8. Iniciar el servidor
+
+python manage.py runserver
+
+Abrir en el navegador:
+
+http://127.0.0.1:8000/
+
+## Base de datos e imágenes
+
+La base de datos SQLite se genera mediante las migraciones.
+
+Las imágenes cargadas por los usuarios se almacenan
+en la carpeta media/.
+
+## Autor
+
+Valentino Piuzzi
+Proyecto entregable final de Diplomatura en Python.

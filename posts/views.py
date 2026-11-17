@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import Post
-from .forms import PostForm
+from .models import Post, Perfil
+from .forms import PostForm, PerfilForm
 
 
 def lista_posts(request):
@@ -38,7 +38,7 @@ def registro_usuario(request):
             return redirect('lista_posts')
     else:
         form = UserCreationForm()
-    return render(request, 'posts/registro.html', {'form': form})
+    return render(request, 'posts/registros.html', {'form': form})
 
 
 def login_usuario(request):
@@ -55,21 +55,6 @@ def login_usuario(request):
 def logout_usuario(request):
     logout(request)
     return redirect('lista_posts')
-
-
-@login_required
-def crear_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.autor = request.user
-            post.save()
-            return redirect('lista_posts')
-    else:
-        form = PostForm()
-    return render(request, 'posts/crear_post.html', {'form': form})
-
 
 @login_required
 def editar_post(request, pk):
@@ -91,3 +76,20 @@ def borrar_post(request, pk):
         post.delete()
         return redirect('lista_posts')
     return render(request, 'posts/borrar_post.html', {'post': post})
+
+@login_required
+def perfil_usuario(request):
+    perfil, creado = Perfil.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = PerfilForm(request.POST, request.FILES, instance=perfil)
+        if form.is_valid():
+            form.save()
+            return redirect('perfil')
+    else:
+        form = PerfilForm(instance=perfil)
+
+    return render(request, 'posts/perfil.html', {
+        'perfil': perfil,
+        'form': form
+    })

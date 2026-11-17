@@ -5,49 +5,54 @@
     <title>Mi Blog</title>
 </head>
 <body>
-    <!-- Barra superior de usuario -->
+
     <header>
         <nav>
             {% if user.is_authenticated %}
-                <p>Hola, <strong>{{ user.username }}</strong> | <a href="{% url 'logout' %}">Cerrar Sesión</a></p>
+                <p>
+                    Hola, <strong>{{ user.username }}</strong> |
+                    <a href="{% url 'crear_post' %}">Crear nuevo post</a> |
+                    <a href="{% url 'perfil' %}">Mi perfil</a> |
+                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                </p>
             {% else %}
                 <p>
-                    <a href="{% url 'login' %}">Iniciar Sesión</a> | 
+                    <a href="{% url 'login' %}">Iniciar sesión</a> |
                     <a href="{% url 'registro' %}">Registrarse</a>
                 </p>
             {% endif %}
         </nav>
     </header>
-    <hr>
 
-    <h1>Bienvenido a mi Blog</h1>
     <hr>
-
+    <h1>Publicaciones del blog</h1>
     {% for post in posts %}
-        <div>
-            <h2><a href="{% url 'detalle_post' post.pk %}">{{ post.titulo }}</a></h2>
-            <p>{{ post.contenido|truncatewords:20 }}</p>
-            <small>Publicado el: {{ post.fecha }} por {{ post.autor }}</small>
-        </div>
+
+        <article>
+            <h2>
+                <a href="{% url 'detalle_post' post.pk %}">
+                    {{ post.titulo }}
+                </a>
+            </h2>
+            <small>
+                Publicado el: {{ post.fecha }}
+                por {{ post.autor }}
+            </small>
+            {% if post.imagen %}
+                <div>
+                    <img src="{{ post.imagen.url }}"
+                         alt="{{ post.titulo }}"
+                         width="250">
+                </div>
+            {% endif %}
+            <p>{{ post.contenido|truncatewords:30 }}</p>
+            <a href="{% url 'detalle_post' post.pk %}">
+                Leer publicación completa
+            </a>
+        </article>
         <hr>
     {% empty %}
-        <p>No hay publicaciones todavía.</p>
+        <p>Todavía no hay publicaciones en el blog.</p>
     {% endfor %}
 </body>
 </html>
-
-<header>
-    <nav>
-        {% if user.is_authenticated %}
-            <p>Hola, <strong>{{ user.username }}</strong> | 
-               <a href="{% url 'crear_post' %}"><strong>+ Crear nuevo post</strong></a> | 
-               <a href="{% url 'logout' %}">Cerrar Sesión</a>
-            </p>
-        {% else %}
-            <p>
-                <a href="{% url 'login' %}">Iniciar Sesión</a> | 
-                <a href="{% url 'registro' %}">Registrarse</a>
-            </p>
-        {% endif %}
-    </nav>
-</header>

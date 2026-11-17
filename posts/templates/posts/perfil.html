@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi perfil</title>
+</head>
+<body>
+
+    <a href="{% url 'lista_posts' %}">
+        ← Volver al inicio
+    </a>
+
+    <h1>Perfil de {{ request.user.username }}</h1>
+
+    {% if perfil.imagen %}
+        <img src="{{ perfil.imagen.url }}"
+             alt="Imagen de perfil"
+             width="150">
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        
+        <button type="submit">
+            Guardar perfil
+        </button>
+    </form>
+
+</body>
+</html>
